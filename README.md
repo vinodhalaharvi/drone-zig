@@ -1,52 +1,78 @@
-# Pico Flight Controller - Hello World
+# Pico Flight Controller
 
-Zig-based blink example for Raspberry Pi Pico.
+A quadcopter flight controller written from scratch in Zig, targeting the Raspberry Pi Pico 2 W.
 
-## Prerequisites
+## Status
 
-1. **Install Zig 0.13.0** (or compatible version)
-   ```
-   # Check your version
-   zig version
-   ```
+🚧 **Work in Progress** — Currently in Phase 1 (Foundation)
 
-2. **No other dependencies** — microzig is fetched automatically
+See [ROADMAP.md](ROADMAP.md) for detailed project plan.
 
-## Build
+## Why?
+
+- Learn embedded systems programming
+- Understand flight controller internals
+- Explore Zig for bare-metal development
+- Build something that actually flies
+
+## Hardware
+
+- **MCU:** Raspberry Pi Pico 2 W (RP2350)
+- **IMU:** MPU6050 (planned)
+- **Frame:** 450mm quadcopter (planned)
+
+## Quick Start
+
+### Prerequisites
+
+- [Zig 0.15.x](https://ziglang.org/download/)
+
+### Build
 
 ```bash
-zig build
+# First time setup (fetches MicroZig)
+make setup
+
+# Build firmware
+make build
 ```
 
-This produces:
-- `zig-out/firmware/pico-blink.elf` — for debugging
-- `zig-out/firmware/pico-blink.uf2` — for flashing
+### Flash
 
-## Flash to Pico
+1. Hold **BOOTSEL** button on Pico
+2. Plug in USB cable
+3. Release button (Pico mounts as drive)
+4. Run:
 
-1. Hold the **BOOTSEL** button on your Pico
-2. Plug in USB (while holding button)
-3. Release button — Pico mounts as a drive called `RPI-RP2`
-4. Copy the `.uf2` file to the drive:
-   ```bash
-   cp zig-out/firmware/pico-blink.uf2 /media/$USER/RPI-RP2/
-   ```
-   (On macOS: `/Volumes/RPI-RP2/`)
+```bash
+make flash-mac   # macOS
+make flash       # Linux
+```
 
-5. Pico reboots automatically — LED should blink!
+## Project Structure
 
-## Troubleshooting
+```
+pico-flight-controller/
+├── src/
+│   └── main.zig        # Main firmware code
+├── build.zig           # Build configuration
+├── build.zig.zon       # Dependencies
+├── Makefile            # Build shortcuts
+├── README.md           # This file
+└── ROADMAP.md          # Project roadmap
+```
 
-**Hash mismatch error:**
-The microzig hash in `build.zig.zon` may need updating. Run `zig build` and it will tell you the correct hash if it's wrong.
+## Current Progress
 
-**Can't find microzig targets:**
-Make sure you're using Zig 0.13.x — microzig versions are tied to specific Zig releases.
+- [x] Toolchain setup (Zig + MicroZig)
+- [x] GPIO output (LED blink)
+- [ ] UART serial debug
+- [ ] I2C + IMU
+- [ ] PWM motor output
+- [ ] Sensor fusion
+- [ ] PID control
+- [ ] Flight testing
 
-## Next Steps
+## License
 
-Once this works, we'll add:
-1. UART serial output (actual "hello world" text)
-2. I2C for IMU communication
-3. PWM output for ESC control
-# drone-zig
+MIT
