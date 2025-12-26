@@ -27,7 +27,7 @@ pub fn main() !void {
     while (true) {
         const blocked = pins.photo_sensor.read();
 
-        if (blocked == 0) {
+        if (blocked == 1) {
             pins.led.put(1);  // Beam blocked - LED on
         } else {
             pins.led.put(0);  // Beam clear - LED off
