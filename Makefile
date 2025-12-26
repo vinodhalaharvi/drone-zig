@@ -1,7 +1,15 @@
-.PHONY: all build clean flash monitor help
+.PHONY: all build clean flash monitor help setup
+
+MICROZIG_URL = https://github.com/ZigEmbeddedGroup/microzig/releases/download/0.15.0/microzig.tar.gz
 
 # Default target
 all: build
+
+# First time setup - fetch microzig
+setup:
+	@echo "Fetching microzig..."
+	zig fetch --save $(MICROZIG_URL)
+	@echo "Setup complete! Run 'make build' to compile."
 
 # Build the firmware
 build:
@@ -30,9 +38,9 @@ flash: build
 		exit 1; \
 	fi
 
-# macOS flash
+# macOS flash (Pico 2 / RP2350)
 flash-mac: build
-	cp zig-out/firmware/pico-blink.uf2 /Volumes/RPI-RP2/
+	cp zig-out/firmware/pico-blink.uf2 /Volumes/RP2350/
 
 # Serial monitor (adjust port as needed)
 SERIAL_PORT ?= /dev/ttyACM0
@@ -50,6 +58,7 @@ monitor-screen:
 help:
 	@echo "Pico Flight Controller - Build Targets"
 	@echo ""
+	@echo "  make setup     - First time setup (fetch microzig)"
 	@echo "  make build     - Build firmware (debug)"
 	@echo "  make release   - Build firmware (optimized)"
 	@echo "  make clean     - Remove build artifacts"
@@ -61,4 +70,3 @@ help:
 	@echo "  PICO_MOUNT  - Path to mounted Pico (default: /media/$$USER/RPI-RP2)"
 	@echo "  SERIAL_PORT - Serial port (default: /dev/ttyACM0)"
 	@echo "  BAUD_RATE   - Baud rate (default: 115200)"
-
