@@ -76,3 +76,8 @@ pico-flight-controller/
 ## License
 
 MIT
+
+
+## India link for product
+https://robocraze.com/products/f450-quadcopter-frame-kit-with-a2212-kv1000-brushless-motor-and-4-30a-esc-and-2-pair-1045-propeller
+
